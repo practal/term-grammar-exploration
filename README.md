@@ -20,7 +20,9 @@ Two conditions have been identified:
 
 To make sure that an identifier is interpreted as an abstraction name, prefix it with
 `!`, as in `!forall`. To make sure that an identifier is interpreted as a variable name,
-prefix it with `?`. 
+prefix it with `?`. The parse result will prefix all identifiers accordingly,
+but will leave those identifiers unprefixed where it cannot be determined without 
+further context if the identifier refers to an abstraction or a variable.
 
 To run all examples: 
 ```

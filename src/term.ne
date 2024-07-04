@@ -117,7 +117,7 @@ function pretty(r) {
 		return "(" + pretty(r[1]) + ")";
 	}
 	if (isBlock(r)) {
-		return "⟦" + r.slice(1).map(pretty).join(", ") + "⟧";
+		return "[" + r.slice(1).map(pretty).join(" ") + "]";
 	}
 	if (isVar(r)) {
         let name = mkVar(r[1]);

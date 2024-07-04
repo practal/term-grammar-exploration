@@ -1,20 +1,21 @@
 import { Test, assertEqT, nat } from "things";
-import nearley from "nearley";
-import grammar from "./term.cjs";
+import { parseString } from "./index.js";
 
 function parse(s : string, numResults : nat) {
     Test(() => {
         console.log("~~~~~~~~~~~~~~~~~~");
         console.log("parsing '" + s + "'");
-        let num = 0;
-        try {
-            const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-            parser.feed(s);
-            console.log(parser.results);
-            console.log("");
-            num = parser.results.length;
-        } catch {}
-        assertEqT(numResults, num);
+        const results = parseString(s);
+        assertEqT(numResults, results.length);
+        for (const result of results) {
+            console.log("  ", result);
+            const reparsed = parseString(result);
+            assertEqT(reparsed.length, 1);
+            if (reparsed.length === 1) {
+                assertEqT(result, reparsed[0]);
+            }
+        }
+        console.log("");
     }, "parsing '" + s + "'");
 }
 
@@ -33,4 +34,5 @@ parse("a b [c: u. u d: u. u]", 1);
 parse("P[x u [r], u [k]]", 1);
 parse("P[[x] [y, z]]", 1);
 parse("P[]", 1);
+parse("P", 1);
 

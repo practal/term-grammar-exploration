@@ -97,25 +97,35 @@ function block(r) {
 
 
 function pretty(r) {
+    function mkVar(name) {
+        if (!name.startsWith("?")) return "?" + name;
+        else return name;
+    }
 	if (isInvalid(r)) return "invalid";
 	if (typeof r === "string") return r;
 	if (isLabel(r)) return r[1] + ":";
 	if (isAbs(r)) {
-		const name = r[1];
+		let name = r[1];
+        if (!name.startsWith("!")) name = "!" + name;
 		const args = r.slice(2).map(pretty);
-		return name + "(" + args.join(", ") + ")";
+		return [name, ...args].join(" ");
 	}
 	if (isTemplate(r)) {
-		return "{" + r[1].join(" ") + " ⟹ " + pretty(r[2]) + "}";
+		return r[1].map(mkVar).join(" ") + ". " + pretty(r[2]);
 	}
 	if (isBracket(r)) {
-		return "[" + pretty(r[1]) + "]";
+		return "(" + pretty(r[1]) + ")";
 	}
 	if (isBlock(r)) {
 		return "⟦" + r.slice(1).map(pretty).join(", ") + "⟧";
 	}
 	if (isVar(r)) {
-		return pretty(r[1]) + "[" + r.slice(2).map(pretty).join(", ") + "]";
+        let name = mkVar(r[1]);
+        const args = r.slice(2);
+        if (args.length > 0)
+		    return name + "[" + args.map(pretty).join(", ") + "]";
+        else 
+            return name;
 	}
 	return r;
 }

@@ -32,4 +32,5 @@ parse("forall x. y d: a. b e:", 2);
 parse("a b [c: u. u d: u. u]", 1);
 parse("P[x u [r], u [k]]", 1);
 parse("P[[x] [y, z]]", 1);
+parse("P[]", 1);
 

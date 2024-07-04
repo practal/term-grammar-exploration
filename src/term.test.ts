@@ -37,4 +37,6 @@ parse("P[x u [r], u [k]]", 1);
 parse("P[[x] [y, z]]", 1);
 parse("P[]", 1);
 parse("P", 1);
+parse("filter (x. P[x]) L", 1);
+parse("filter L pred: x. P[x]", 1);
 

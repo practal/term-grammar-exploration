@@ -98,7 +98,6 @@ function block(r) {
 	return ["block", ...r];
 }
 
-
 function pretty(r) {
     function mkVar(name) {
         if (!name.startsWith("?")) return "?" + name;

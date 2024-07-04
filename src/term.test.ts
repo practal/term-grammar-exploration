@@ -7,13 +7,15 @@ function parse(s : string, numResults : nat) {
         console.log("parsing '" + s + "'");
         const results = parseString(s);
         assertEqT(numResults, results.length);
+        let i = 1;
         for (const result of results) {
-            console.log("  ", result);
+            console.log("  " + i + ") " + result);
             const reparsed = parseString(result);
             assertEqT(reparsed.length, 1);
             if (reparsed.length === 1) {
                 assertEqT(result, reparsed[0]);
             }
+            i++;
         }
         console.log("");
     }, "parsing '" + s + "'");

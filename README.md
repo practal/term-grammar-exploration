@@ -1,6 +1,6 @@
 # Term Grammar Exploration with [Nearley](https://nearley.js.org)
 
-This is a playground for experimenting with what restrictions are necessary to
+This is a playground for experimenting with restrictions necessary to
 allow abstraction algebra syntax such as 
 ```
 forall x. exists y. equals x y
@@ -11,7 +11,7 @@ forall (x. exists (y. equals x y))
 ```
 while making sure that the parse result is still unique. 
 
-Two conditions have been identified:
+Two sufficient (?) restrictions have been identified:
 
 * Arguments of abstraction applications which are abstraction applications
  themselves cannot have any arguments.
@@ -33,9 +33,9 @@ npm install
 npm test
 ```
 
-The output should be:
+The output should be something like:
 ```
-There are 16 tests to run.
+There are 18 tests to run.
 ------------------------------------------------
 ~~~~~~~~~~~~~~~~~~
 parsing 'equals x y'
@@ -107,6 +107,14 @@ parsing 'P[]'
 parsing 'P'
   1) P
 
+~~~~~~~~~~~~~~~~~~
+parsing 'filter (x. P[x]) L'
+  1) !filter (?x. ?P[x]) L
+
+~~~~~~~~~~~~~~~~~~
+parsing 'filter L pred: x. P[x]'
+  1) !filter L pred: ?x. ?P[x]
+
 ------------------------------------------------
-All 16 tests concluded successfully.
+All 18 tests concluded successfully.
 ```
